@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Conjectura de Collatz</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    background:#000;
+    color:#fff;
+    font-family:Segoe UI,Arial,sans-serif;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh;
+}
+
+.container{
+    width:900px;
+    max-width:95%;
+    background:#111;
+    border:2px solid #fff;
+    border-radius:15px;
+    padding:30px;
+    box-shadow:0 0 25px rgba(255,255,255,.15);
+}
+
+h1{
+    text-align:center;
+    margin-bottom:20px;
+    font-size:38px;
+}
+
+.sub{
+    text-align:center;
+    color:#bbb;
+    margin-bottom:30px;
+}
+
+input{
+    width:100%;
+    padding:15px;
+    font-size:22px;
+    background:#000;
+    color:#fff;
+    border:2px solid #fff;
+    border-radius:8px;
+    outline:none;
+}
+
+button{
+    width:100%;
+    margin-top:15px;
+    padding:15px;
+    font-size:20px;
+    background:#fff;
+    color:#000;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+    transition:.25s;
+}
+
+button:hover{
+    background:#ddd;
+}
+
+.info{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:15px;
+    margin-top:25px;
+}
+
+.card{
+    border:1px solid #fff;
+    border-radius:8px;
+    padding:15px;
+    text-align:center;
+}
+
+.card h2{
+    font-size:18px;
+    color:#ccc;
+}
+
+.card p{
+    margin-top:10px;
+    font-size:28px;
+    font-weight:bold;
+}
+
+#resultado{
+    margin-top:25px;
+    border:1px solid #fff;
+    border-radius:8px;
+    padding:15px;
+    height:320px;
+    overflow:auto;
+    background:#050505;
+    white-space:pre-wrap;
+    font-family:Consolas,monospace;
+    line-height:1.6;
+}
+
+footer{
+    text-align:center;
+    margin-top:25px;
+    color:#777;
+}
+</style>
+
+</head>
+<body>
+
+<div class="container">
+
+<h1>Conjectura de Collatz</h1>
+
+<p class="sub">
+Digite qualquer número inteiro positivo.
+</p>
+
+<input
+id="numero"
+type="number"
+min="1"
+placeholder="Ex.: 99">
+
+<button onclick="collatz()">
+Executar
+</button>
+
+<div class="info">
+
+<div class="card">
+<h2>Passos</h2>
+<p id="passos">0</p>
+</div>
+
+<div class="card">
+<h2>Maior número</h2>
+<p id="maior">0</p>
+</div>
+
+<div class="card">
+<h2>Resultado</h2>
+<p id="fim">-</p>
+</div>
+
+</div>
+
+<div id="resultado">
+A sequência aparecerá aqui...
+</div>
+
+<footer>
+Conjectura de Collatz • HTML + JavaScript
+</footer>
+
+</div>
+
+<script>
+
+function collatz(){
+
+let numero=parseInt(document.getElementById("numero").value);
+
+if(isNaN(numero)||numero<1){
+
+alert("Digite um número inteiro positivo.");
+
+return;
+
+}
+
+let texto="";
+
+let passos=0;
+
+let maior=numero;
+
+texto+="Número inicial: "+numero+"\n\n";
+
+while(numero!=1){
+
+if(numero>maior)
+maior=numero;
+
+if(numero%2==0){
+
+let novo=numero/2;
+
+texto+="Passo "+(passos+1)+" : "
++numero+" é PAR → "
++numero+"/2 = "
++novo+"\n";
+
+numero=novo;
+
+}else{
+
+let novo=numero*3+1;
+
+texto+="Passo "+(passos+1)+" : "
++numero+" é ÍMPAR → "
++"3×"+numero+"+1 = "
++novo+"\n";
+
+numero=novo;
+
+}
+
+passos++;
+
+}
+
+texto+="\n====================================\n";
+texto+="Fim da sequência.\n";
+texto+="Chegou ao número 1.\n";
+
+document.getElementById("resultado").textContent=texto;
+document.getElementById("passos").textContent=passos;
+document.getElementById("maior").textContent=maior;
+document.getElementById("fim").textContent="1";
+
+}
+
+</script>
+
+</body>
+</html>
